@@ -1,1 +1,17 @@
-<div class=""></div>
+<div #codeEditor class="card-dark"
+     widthShift [minWidth]="width"
+     [style.width]="width + 'px'">
+  <td-code-editor style="height: 100%;width: 100%;"
+                  editorStyle="border:0;"
+                  flex
+                  theme="vs-dark"
+                  language="sql"
+                  automaticLayout
+                  [editorOptions]="{readOnly:false, fontSize:14}"
+                  [(ngModel)]="code"
+                  (change)="editorChange()">
+  </td-code-editor>
+  <button mat-button class="hide-to-left" onclick="hideToLeft()" title="Hide">
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+</div>

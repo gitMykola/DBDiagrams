@@ -11,6 +11,10 @@ import {
   PlateComponent
 } from './components';
 import { MatModule } from './shared/mat.module';
+import { CovalentCodeEditorModule } from '@covalent/code-editor';
+import { StructureService } from './services/structure.service';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { WidthShiftDirective } from './directives/widthShift.directive';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,20 @@ import { MatModule } from './shared/mat.module';
     DiagramComponent,
     DashboardComponent,
     CodeEditorComponent,
-    PlateComponent
+    PlateComponent,
+    WidthShiftDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatModule
+    MatModule,
+    CovalentCodeEditorModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    HttpClient,
+    StructureService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

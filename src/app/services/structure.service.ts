@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-import { Structure } from '../shared/models/structure';
+import { Structures } from '../services/sample.structure';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { map, catchError } from 'rxjs/operators'
 
+class Structure { _id: number}
 
 const API_URL = environment.apiUrl;
 @Injectable()
 export class StructureService {
-
+  public structures: any[] = [];
   constructor(private http: HttpClient) {
+    Structures.forEach(s => this.structures.push(s)); 
   }
 
   public getAllStructures(projectId: number): Observable<Structure[]> {
