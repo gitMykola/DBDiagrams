@@ -50,7 +50,7 @@ export const Structures = [
         }
       },
       {
-        fieldPath: 'orders.user_id',
+        fieldPath: 'orders.users_id',
         fieldType: 'int',
         fieldOptions: {
           primaryKey: false,
@@ -66,6 +66,52 @@ export const Structures = [
           primaryKey: false,
           isRequired: true,
           defaultValue: 'new order',
+          ref: null
+        }
+      }
+    ]
+  },
+  {
+    project: '507f191e810c19729de860ea',
+    name: 'category',
+    fields: [
+      {
+        fieldPath: 'category.id',
+        fieldType: 'int',
+        fieldOptions: {
+          primaryKey: true,
+          isRequired: true,
+          defaultValue: null,
+          ref: null
+        }
+      },
+      {
+        fieldPath: 'category.name',
+        fieldType: 'varchar',
+        fieldOptions: {
+          primaryKey: false,
+          isRequired: true,
+          defaultValue: null,
+          ref: null
+        }
+      },
+      {
+        fieldPath: 'category.description',
+        fieldType: 'varchar',
+        fieldOptions: {
+          primaryKey: false,
+          isRequired: true,
+          defaultValue: 'new goods',
+          ref: null
+        },
+      },
+      {
+        fieldPath: 'category.store',
+        fieldType: 'int',
+        fieldOptions: {
+          primaryKey: false,
+          isRequired: true,
+          defaultValue: 1,
           ref: null
         }
       }

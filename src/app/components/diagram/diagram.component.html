@@ -1,7 +1,12 @@
 <div class="diagram-container">
   <dashboard></dashboard>
   <div  class="diagram-wrapper">
-    <codeeditor></codeeditor>
+    <div class="code-wrapper" #codeEditor widthShift [minWidth]="width">
+      <codeeditor></codeeditor>
+      <button mat-button class="hide-to-left" onclick="hideToLeft()" title="Hide">
+        <mat-icon>arrow_left</mat-icon>
+      </button>
+    </div>
     <plate></plate>
   </div>
 </div>

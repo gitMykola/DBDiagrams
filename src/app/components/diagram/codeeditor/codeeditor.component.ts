@@ -7,7 +7,6 @@ import { StructureService } from '../../../services/structure.service';
   styleUrls: ['codeeditor.component.less']
 })
 export class CodeEditorComponent implements OnInit {
-  public width: number = 300;
   public code: string = '';
   constructor(
     private el: ElementRef,
@@ -17,21 +16,14 @@ export class CodeEditorComponent implements OnInit {
   }
   ngOnInit() {
     this.structureService.structures.forEach(s => {
-      this.code += 'Table ' + s.name + ' {\n';
+      this.code += '\nTable ' + s.name + ' {\n';
       const lenght = s.fields.length - 1;
       s.fields.forEach((f, index) => {
         this.code += f.fieldPath.split('.').pop();
         this.code += ' ' + f.fieldType;
-        if (index <= lenght) this.code += ',\n';
+        if (index <= lenght - 1) this.code += ',\n';
       });
       this.code += '\n}\n';
     });
-  }
-  hideToLeft() {
-    if (this.el.nativeElement.clientWidth == 0) {
-      this.el.nativeElement.style.width = this.width + 'px';
-    } else {
-      this.el.nativeElement.style.width = '0';
-    }
   }
 }
