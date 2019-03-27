@@ -7,16 +7,26 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 })
 export class DiagramComponent implements OnInit {
   @ViewChild('codeEditor') codeElement: ElementRef;
-  public width: number = 300;
+  public minWidth: number = 300;
+  public maxWidth: number = 300;
   constructor() { }
   ngOnInit() {
-    this.codeElement.nativeElement.style.width = this.width + 'px';
+    this.codeElement.nativeElement.style.width = this.minWidth + 'px';
+    this.maxWidth = this.viewportWidth() / 2;
   }
   hideToLeft() {
     if (this.codeElement.nativeElement.clientWidth == 0) {
-      this.codeElement.nativeElement.style.width = this.width + 'px';
+      this.codeElement.nativeElement.style.width = this.minWidth + 'px';
     } else {
       this.codeElement.nativeElement.style.width = '0';
     }
+  }
+  viewportWidth() {
+    let w = window.innerWidth || 0;
+    if (document.documentElement && document.documentElement.clientWidth)
+      w = document.documentElement.clientWidth;
+    else if (document.body)
+      w = document.body.clientWidth;
+    return w;
   }
 }
