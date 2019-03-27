@@ -28,10 +28,10 @@ import { WidthShiftDirective } from './directives/widthShift.directive';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    AppRoutingModule.forRoot(routes, { useHash: true }),
     MatModule,
     CovalentCodeEditorModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
     HttpClient,

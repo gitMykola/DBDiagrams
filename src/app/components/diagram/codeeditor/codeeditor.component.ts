@@ -16,14 +16,15 @@ export class CodeEditorComponent implements OnInit {
   }
   ngOnInit() {
     this.structureService.structures.forEach(s => {
-      this.code += '\nTable ' + s.name + ' {\n';
+      this.code += 'Table ' + s.name + ' {\n';
       const lenght = s.fields.length - 1;
       s.fields.forEach((f, index) => {
         this.code += f.fieldPath.split('.').pop();
         this.code += ' ' + f.fieldType;
-        if (index <= lenght - 1) this.code += ',\n';
+        if (index <= lenght - 1) this.code += ',';
+        this.code += '\n';
       });
-      this.code += '\n}\n';
+      this.code += '} \n\n';
     });
   }
 }

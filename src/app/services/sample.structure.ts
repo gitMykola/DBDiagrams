@@ -96,7 +96,7 @@ export const Structures = [
         }
       },
       {
-        fieldPath: 'category.description',
+        fieldPath: 'category.descriptions',
         fieldType: 'varchar',
         fieldOptions: {
           primaryKey: false,
