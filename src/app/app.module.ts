@@ -28,7 +28,7 @@ import { WidthShiftDirective } from './directives/widthShift.directive';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule.forRoot(routes, { useHash: true }),
+    AppRoutingModule,
     MatModule,
     CovalentCodeEditorModule,
     HttpClientModule

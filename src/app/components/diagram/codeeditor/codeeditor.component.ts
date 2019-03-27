@@ -25,6 +25,16 @@ export class CodeEditorComponent implements OnInit {
         this.code += '\n';
       });
       this.code += '} \n\n';
+      this.code = this.toUnicode(this.code);
     });
+  }
+  toUnicode(str) {
+    return str.split('').map(function (value, index, array) {
+      var temp = value.charCodeAt(0).toString(16).toUpperCase();
+      if (temp.length > 2) {
+        return '\\u' + temp;
+      }
+      return value;
+    }).join('');
   }
 }
