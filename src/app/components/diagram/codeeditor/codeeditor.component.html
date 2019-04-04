@@ -3,10 +3,10 @@
                   editorStyle="border:0;"
                   flex
                   theme="vs-dark"
-                  language="sql"
+                  language="mysql"
                   automaticLayout
                   [editorOptions]="{readOnly:false, fontSize:14, lineHeight: 15, fontWeight:100}"
-                  [(ngModel)]="code"
+                  [(ngModel)]="editorService.text"
                   (change)="editorChange()">
   </td-code-editor>
 </div>

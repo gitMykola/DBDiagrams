@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-import { Structures } from '../services/sample.structure';
+import testData from '../../assets/sample.project.json';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { map, catchError } from 'rxjs/operators'
+import { Project } from '../models';
 
-class Structure { _id: number}
 
 const API_URL = environment.apiUrl;
+const TEST_DATA_URL = environment.TEST_DATA_URL;
+
 @Injectable()
-export class StructureService {
-  public structures: any[] = [];
+export class ProjectsService {
   constructor(private http: HttpClient) {
-    Structures.forEach(s => this.structures.push(s)); 
+    //console.dir(testData);
   }
 
-  public getAllStructures(projectId: number): Observable<Structure[]> {
-    const url = API_URL + `/structure/${projectId}`;
+  public getAll(user: string): Observable<Project[]> {
+    const url = API_URL + `/project/${user}`;
     return this.http
       .get(url)
       .pipe(
@@ -30,23 +31,24 @@ export class StructureService {
       );
   }
 
-  public createStructure(structure: Structure): Observable<Structure> {
-    const url = API_URL + '/structure';
+  public getSample(): Observable<Project[]> {
     return this.http
-      .post(url, { structure })
+      .get(TEST_DATA_URL)
       .pipe(
-        map((response: any) => {
-          const data = response;
-          return data.structures;
+      map((response: Project[]) => {
+        const data = [];
+        response.forEach(res => data.push(new Project(res)));
+        //console.dir(response.map(res => new Project(res)));
+        return data;
         }),
         catchError(this.handleError)
       );
   }
 
-  public updateStructure(structure: Structure): Observable<Structure> {
+  public updateStructure(project: Project): Observable<Project> {
     const url = API_URL + '/structure/';
     return this.http
-      .put(url + structure._id, { structure })
+      .put(url + project.id, { project })
       .pipe(
         map((response: any) => {
           const data = response;

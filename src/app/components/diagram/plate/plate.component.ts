@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { StructureService } from '../../../services/structure.service';
+import { ProjectsService } from '../../../services/projects.service';
 import * as d3 from "d3";
 import { Element } from '@angular/compiler';
 
@@ -12,7 +12,7 @@ export class PlateComponent implements OnInit, AfterViewInit {
   @ViewChild('plate') plate: ElementRef;
   public zindex: number = 0;
   constructor(
-    public structureService: StructureService
+    public projectsService: ProjectsService
   ) { }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class PlateComponent implements OnInit, AfterViewInit {
     this.setTables();
   }
   setTables() {
-    const tables = this.structureService.structures;
+    const tables = [];//this.structureService.structures;
     let tableGroup = d3.select(this.plate.nativeElement)
       .append('g')
       .attr('class', 'table-group');

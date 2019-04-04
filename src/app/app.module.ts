@@ -12,9 +12,10 @@ import {
 } from './components';
 import { MatModule } from './shared/mat.module';
 import { CovalentCodeEditorModule } from '@covalent/code-editor';
-import { StructureService } from './services/structure.service';
+import { ProjectsService } from './services/projects.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { WidthShiftDirective } from './directives/widthShift.directive';
+import { EditorService } from './services/editor.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { WidthShiftDirective } from './directives/widthShift.directive';
   ],
   providers: [
     HttpClient,
-    StructureService
+    ProjectsService,
+    EditorService
   ],
   bootstrap: [AppComponent]
 })

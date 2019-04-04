@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { StructureService } from '../../../services/structure.service';
+import { ProjectsService } from '../../../services/projects.service';
+import { EditorService } from '../../../services/editor.service';
 
 @Component({
   selector: 'codeeditor',
@@ -10,12 +11,13 @@ export class CodeEditorComponent implements OnInit {
   public code: string = '';
   constructor(
     private el: ElementRef,
-    public structureService: StructureService
+    public projectsService: ProjectsService,
+    public editorService: EditorService
   ) { }
   editorChange() {
   }
   ngOnInit() {
-    this.structureService.structures.forEach(s => {
+    /*this.structureService.structures.forEach(s => {
       this.code += 'Table ' + s.name + ' {\n';
       const lenght = s.fields.length - 1;
       s.fields.forEach((f, index) => {
@@ -26,7 +28,7 @@ export class CodeEditorComponent implements OnInit {
       });
       this.code += '} \n\n';
       this.code = this.toUnicode(this.code);
-    });
+    });*/
   }
   toUnicode(str) {
     return str.split('').map(function (value, index, array) {
