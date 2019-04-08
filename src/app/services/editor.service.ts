@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Project, Collection, Reference } from '../models';
+import { Project } from '../models/project.model';
+import { Collection } from '../models/collection.model';
+import { Reference } from '../models/reference.model';
 
 @Injectable()
 export class EditorService {
-  public text: string = '';
+  public text = '';
   public loadProject(project: Project) {
     this.text = '';
     project.collections.forEach((collection: Collection) => {

@@ -32,7 +32,7 @@ const FieldSchema = mongoose.Schema({
     }
   });
 
-FieldSchema.virtual('fieldName').get(function () {
+FieldSchema.virtual('fieldName').get(function() {
   return this.fieldPath.split('.').pop();
 });
 

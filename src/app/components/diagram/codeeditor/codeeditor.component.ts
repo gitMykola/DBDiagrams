@@ -3,12 +3,12 @@ import { ProjectsService } from '../../../services/projects.service';
 import { EditorService } from '../../../services/editor.service';
 
 @Component({
-  selector: 'codeeditor',
+  selector: 'app-codeeditor',
   templateUrl: 'codeeditor.component.html',
   styleUrls: ['codeeditor.component.less']
 })
 export class CodeEditorComponent implements OnInit {
-  public code: string = '';
+  public code = '';
   constructor(
     private el: ElementRef,
     public projectsService: ProjectsService,
@@ -31,8 +31,8 @@ export class CodeEditorComponent implements OnInit {
     });*/
   }
   toUnicode(str) {
-    return str.split('').map(function (value, index, array) {
-      var temp = value.charCodeAt(0).toString(16).toUpperCase();
+    return str.split('').map((value) => {
+      const temp = value.charCodeAt(0).toString(16).toUpperCase();
       if (temp.length > 2) {
         return '\\u' + temp;
       }

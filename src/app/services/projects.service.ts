@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 import testData from '../../assets/sample.project.json';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
-import { map, catchError } from 'rxjs/operators'
-import { Project } from '../models';
+import { map, catchError } from 'rxjs/operators';
+import { Project } from '../models/project.model';
+
 
 
 const API_URL = environment.apiUrl;
@@ -14,8 +15,11 @@ const TEST_DATA_URL = environment.TEST_DATA_URL;
 
 @Injectable()
 export class ProjectsService {
+  activeProject: Project = null;
+  projects: Project[] = [];
+  onChange = new EventEmitter<boolean>();
   constructor(private http: HttpClient) {
-    //console.dir(testData);
+    // console.dir(testData);
   }
 
   public getAll(user: string): Observable<Project[]> {
@@ -31,15 +35,16 @@ export class ProjectsService {
       );
   }
 
-  public getSample(): Observable<Project[]> {
+  public getSample(): Observable<boolean> {
     return this.http
       .get(TEST_DATA_URL)
       .pipe(
       map((response: Project[]) => {
-        const data = [];
-        response.forEach(res => data.push(new Project(res)));
-        //console.dir(response.map(res => new Project(res)));
-        return data;
+        this.projects = [];
+        response.forEach(res => this.projects.push(new Project(res)));
+        this.activeProject = this.projects[0];
+        this.onChange.emit(true);
+        return true;
         }),
         catchError(this.handleError)
       );
@@ -69,6 +74,6 @@ export class ProjectsService {
 
   private handleError(error: Response | any) {
     console.error('ProjectService::handleError', error);
-    return Observable.throw(error);
+    return throwError(error);
   }
 }
