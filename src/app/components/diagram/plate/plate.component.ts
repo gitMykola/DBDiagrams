@@ -33,6 +33,9 @@ export class PlateComponent implements OnInit, AfterViewInit {
         .append('g')
         .attr('class', 'collection-group');
       this.ps.activeProject.collections.forEach((c, i) => {
+        const dWidth = this.dataLevels({
+          type: DataTypes.object, data: c.fields
+        });
         const collection = collectionGroup.append('svg')
           .attr('class', 'collection')
           .attr('x', i * 190 + ((i > 0) ? (i + 1) * 80 : 80))
@@ -40,7 +43,7 @@ export class PlateComponent implements OnInit, AfterViewInit {
           .attr('height', 32 + 29 * this.dataLength({
             type: DataTypes.object, data: c.fields
           }))
-          .attr('width', 230);
+          .attr('width', 190 + 15 * dWidth);
         this.addCollectionHeader(collection, c.name);
         let dataL = 0;
         for (i = 0; i < c.fields.length; i++) {
@@ -69,6 +72,7 @@ export class PlateComponent implements OnInit, AfterViewInit {
         })*/
       });
       this.setCollectionMovement();
+      this.setFieldContainersExpand();
     }
   }
   addCollectionHeader(
@@ -97,11 +101,11 @@ export class PlateComponent implements OnInit, AfterViewInit {
     container: d3.Selection,
     field: any,
     k: number,
-    x: number = 0
+    x: number = 1
   ) {
     const f = container.append('svg')
       .attr('class', 'field')
-      .attr('x', x * 20)
+      .attr('x', (x - 1) * 15)
       .attr('y', 32 + k * 29)
       .attr('width', 190)
       .attr('height', 29)
@@ -129,15 +133,15 @@ export class PlateComponent implements OnInit, AfterViewInit {
     container: d3.Selection,
     field: Field,
     k: number,
-    x: number = 0
+    x: number = 1
   ) {
-
+    const dWidth = this.dataLevels(field) + 1;
     const count = this.dataLength(field) + 1;
     const f = container.append('svg')
       .attr('class', 'field field-container')
-      .attr('x', x * 20)
+      .attr('x', (x - 1) * 15)
       .attr('y', 32 + k * 29)
-      .attr('width', 190)
+      .attr('width', 190 + 15 * dWidth)
       .attr('height', count * 29)
       .style('fill', '#cccccc');
     f.append('rect')
@@ -159,7 +163,7 @@ export class PlateComponent implements OnInit, AfterViewInit {
     f.append('title')
       .text(field.name + ' (' + field.type + ')');
     let dataL = 0;
-    x++;
+    let dx = x >= 2 ? 2 : x + 1;
     field.data.forEach((element, index) => {
       if (element.type === DataTypes.object) {
         dataL = this.dataLength(element);
@@ -167,10 +171,10 @@ export class PlateComponent implements OnInit, AfterViewInit {
           f,
           element,
           index,
-          x
+          dx
         );
       } else {
-        this.addCollectionField(f, element, index + dataL, x);
+        this.addCollectionField(f, element, index + dataL, dx);
       }
     });
   }
@@ -196,11 +200,24 @@ export class PlateComponent implements OnInit, AfterViewInit {
         });
     });
   }
-  dataLength(obj: any, s: number = 0) {
+  setFieldContainersExpand() {
+    document.querySelectorAll('.collection .field-container')
+      .forEach(container => { });
+  }
+  dataLength(obj: any, s = 0) {
     obj.data.forEach(o => {
       s++;
       if (o.type === DataTypes.object) {
-        s += this.dataLength(o, s);
+        s += this.dataLength(o);
+      }
+    });
+    return s;
+  }
+  dataLevels(obj: any, s = 0) {
+    obj.data.forEach(o => {
+      if (o.type === DataTypes.object) {
+        s++;
+        s += this.dataLevels(o);
       }
     });
     return s;

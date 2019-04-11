@@ -66,6 +66,12 @@
                 "array": true
               }
             ]
+          },
+          {
+            "name": "address",
+            "type": "String",
+            "array": true,
+            "options": [ "require" ]
           }
         ]
       },
